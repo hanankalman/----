@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+    <script>
+        function numPressed(iNumber) {
+            var sCalaculatorValue = document.getElementById("calculator_value");
+            // sCalaculatorValue.value = sCalaculatorValue.value + iNumber;
+
+            if (sCalaculatorValue.value === '0'){
+                sCalaculatorValue.value = iNumber;
+            } else {
+                sCalaculatorValue.value += iNumber;
+            }}
+        
+        function calculate(equation) {
+            var answer = eval(equation);
+            document.getElementById('calculator_value').value = answer;
+        }
+
+        function clearButton() {
+            document.getElementById('calculator_value').value = '0';
+        }
+    </script>
+</head>
+<body>
+    <center>
+        <p><input type="text" id="calculator_value" value="0" style="display:inline-block; width:190px;"/></p>
+        
+        <table style="border-style: outset;" cellpadding="1px">
+            <!-- table row -->
+   
+            <tr> 
+                <!-- table cell -->
+                <td><button style="padding: 20px;" onclick="numPressed('1')">1</button></td>
+                <td><button style="padding: 20px;" onclick="numPressed('2')">2</button></td>
+                <td><button style="padding: 20px;" onclick="numPressed('3')">3</button></td>
+                <td><button width="50px" style="padding: 20px; background-color: lightgray;
+                    border-color: lightslategrey;" onclick="numPressed('/')">/</button></td>
+            </tr>
+            <tr>
+                <td><button style="padding: 20px;" onclick="numPressed('4')">4</button></td>
+                <td><button style="padding: 20px;" onclick="numPressed('5')">5</button></td>
+                <td><button style="padding: 20px;" onclick="numPressed('6')">6</button></td>
+                <td><button style="padding: 20px; background-color: lightgray;
+                    border-color: lightslategrey;" onclick="numPressed('*')">*</button></td>
+            </tr>
+            <tr>
+                <td><button style="padding: 20px;" onclick="numPressed('7')">7</button></td>
+                <td><button style="padding: 20px;" onclick="numPressed('8')">8</button></td>
+                <td><button style="padding: 20px;" onclick="numPressed('9')">9</button></td>
+                <td><button style="padding: 20px; background-color: lightgray;
+                    border-color: lightslategrey;" onclick="numPressed('-')">-</button></td>
+            </tr>
+            <tr>
+                <td><button style="padding: 20px; background-color: lightgray;
+                    border-color: lightslategrey;" onclick="clearButton()">c</button></td>
+                <td><button style="padding: 20px;" onclick="numPressed('0')">0</button></td>
+                <td><button style="padding: 20px; background-color: lightgray;
+                    border-color: lightslategrey;" onclick="calculate (document.getElementById('calculator_value').value)">=</button></td>
+                <td><button style="padding: 20px; background-color: lightgray;
+                    border-color: lightslategrey;" onclick="numPressed('+')">+</button></td>
+            </tr>
+        </table>
+    </center>
+</body>
+</html>

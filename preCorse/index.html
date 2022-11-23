@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index</title>
+    <script>
+        function myButtonPress() 
+        {
+            var sUsername = document.getElementById("userNameInput").value;
+            var sPassword = document.getElementById("passwordInput").value;
+            
+            if (sUsername === "חנן קלמן" && sPassword === "123456") {
+                alert(sUsername + " - " + sPassword);
+            } else {
+                if (sUsername === "ניקול קלמן" && sPassword === "654321"){
+                    alert(sUsername + " - " + sPassword);    
+                } else {
+                alert ("Wrong Password");
+                }
+            }
+        }
+    </script>
+</head>
+<body style="background: url(https://www.yo-yoo.co.il/rekaim/images/uploads/f9ef48.jpg);
+background-repeat: no-repeat; background-size: cover;">
+    <h1 style="text-align: center;">מכללת פרוגיקס</h1>
+    <h2 style="text-align: center;">הכנס פרטי הזדהות</h2>
+    <center>
+        <input id="userNameInput" type="text" placeholder="Insert User Name" style="text-align:center; display: inline-block; width:200px"><br/>
+        <input id="passwordInput" type="password" placeholder="Insert Password" style="text-align:center; display: inline-block; width:200px"><br/>
+        <label for="remember me"> זכור אותי </label>
+        <input type="checkbox" id="rememberMeChkbox" name="remember me">
+        <br/>
+        <input id="signInButton" type="submit" onclick="myButtonPress()" value="Sign-In" style="color: white; font-weight: bold; text-align: center; background-color: grey; border: grey; display: inline-block; width:200px"><br/>
+    </center>
+</body>
+</html>
