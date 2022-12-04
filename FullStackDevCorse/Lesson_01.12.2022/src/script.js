@@ -1,10 +1,19 @@
 let userData;
+//document.getElementById("myImg").src = "../static/prty.svg";
+
+//document.getElementById("myHome").textContent = "Welcome User";
+
 let json = fetch("../data_base.json")
     .then(Response => Response.json())
     .then(data => {
         console.log(data);
         userData = data;
     });
+
+function myLoadFunc() {
+    document.getElementById("myImg").src = "../static/prty.svg";
+    document.getElementById("myHome").textContent = "Welcome User";
+}
 
 function login() {
     let err;
@@ -15,12 +24,7 @@ function login() {
         //document.getElementById("main").textContent = "Welcome " + uName;
         //document.getElementById("myImg").src = "../static/prty.svg";
         location.assign("http://127.0.0.1:5500/FullStackDevCorse/Lesson_01.12.2022/src/index.html");
-        document.getElementById("main").textContent = "Welcome " + uName;
-
-        //myWindow.document.write("<h1>New Window</h1>");
-        //myWindow.document.write("<p>Hello World!</p>");
-
-        //location.assign("http://127.0.0.1:5500/FullStackDevCorse/Lesson_01.12.2022/src/index.html");
+        //document.getElementById("myHome").textContent = "Welcome " + uName;
         //document.getElementById("myImg").src = "../static/prty.svg";
 
         // document.getElementById("main").innerText = "Welcome " + uName;
