@@ -13,13 +13,13 @@
 <body>
     <p>
     <div>
-        <form action="/action_page.php" method="post">
+        <form target="_self">
             <label for="uName">User Name:</label>
             <input type="text" id="uName" name="uName"><br><br>
             <label for="psw">Password:</label>
             <input type="text" id="psw" name="psw"><br><br>
-            <input type="button" onclick="submit" value="Submit using POST">
         </form>
+        <input type="button" onclick="login()" value="Log In">
     </div>
     </p>
 </body>
