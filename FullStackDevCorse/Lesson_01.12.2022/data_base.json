@@ -2,5 +2,13 @@
     "test_user" : {
         "username": "username",
         "password": "password"
+    },
+    "player1":{
+        "username": "player1",
+        "password": "player1"
+    },
+    "player2":{
+        "username": "player2",
+        "password": "player2"
     }
 }
