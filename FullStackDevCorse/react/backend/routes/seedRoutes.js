@@ -5,7 +5,8 @@ import User from '../models/userModel.js';
 const seedRouter = express.Router();
 
 seedRouter.get('/', async (req, res) => {
-    await User.remove({});
+    //await User.remove({});
+    await User.deleteMany({});
     const createdUsers = await User.insertMany(data.users);
     res.send({ createdUsers });
  });
