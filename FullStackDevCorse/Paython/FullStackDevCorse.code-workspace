@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "Python_Course_WebDev",
+			"path": "Python_Course_WebDev"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "memory_game-main"
+	}
+}
