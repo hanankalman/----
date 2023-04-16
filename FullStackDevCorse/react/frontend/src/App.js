@@ -17,6 +17,10 @@ import SigninScreen from './screen/SigninScreen';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ShippingAddressScreen from './screen/ShippingAddressScreen';
+import SignupScreen from './screen/SignupScreen';
+import PaymentMethodScreen from './screen/PaymentMethodScreen';
+import PlaceOrderScreen from './screen/PlaceOrderScreen';
 
 function App() {
   //const { state } = useContext(Store);
@@ -27,6 +31,8 @@ function App() {
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('paymentMethod');
     window.location.href = '/signin';
   };
 
@@ -83,6 +89,10 @@ function App() {
               <Route path='/product/:slug' element={<ProductScreen />} />
               <Route path='/cart' element={<CartScreen />} />
               <Route path='/signin' element={<SigninScreen />} />
+              <Route path="/shipping" element={<ShippingAddressScreen />} />
+              <Route path="/signup" element={<SignupScreen />} />
+              <Route path="/payment" element={<PaymentMethodScreen />}></Route>
+              <Route path="/placeorder" element={<PlaceOrderScreen />} />
               <Route path='/' element={<HomeScreen />} />
             </Routes>
           </Container>

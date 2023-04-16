@@ -5,6 +5,33 @@ import { generateToken } from '../utils.js';
 
 const userRouter = express.Router();
 
+userRouter.post('/signup', (async (req, res) => {
+
+    const userExist = await User.findOne({ $or: [{ email: req.body.email }, { username: req.body.username }] });
+    if (userExist) {
+        return res.status(401).json({ message: `username or email already exists` })
+    }
+    else {
+        const newUser = new User({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            username: req.body.username,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password),
+        });
+        const user = await newUser.save();
+        res.send({
+            _id: user._id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            email: user.email,
+            isAdmin: false,
+            token: generateToken(user),
+        });
+    }
+}));
+
 userRouter.post('/signin', (async (req, res) => {
     const user = await User.findOne({ email: req.body.email }); //נגיד אם יש משתמש על פי האימייל שלו
     if (user) {
