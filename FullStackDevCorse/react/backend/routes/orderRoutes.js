@@ -37,6 +37,12 @@ orderRouter.post('/', isAuth, (async (req, res) => {
     user: req.user._id,
   });
 
+  orderRouter.get('/my-orders', isAuth, (async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
+  })
+  );
+
   orderRouter.get('/:id', isAuth, (async (req, res) => {
     const order = await Order.findById(req.params.id);
     if (order) {
