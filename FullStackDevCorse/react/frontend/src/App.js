@@ -29,6 +29,9 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { getError } from './utils';
 import SearchScreen from './screen/SearchScreen';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
+import ProductListScreen from './screen/ProductListScreen';
 
 function App() {
   //const { state } = useContext(Store);
@@ -89,15 +92,16 @@ function App() {
               <Navbar.Collapse id="basic-navbar-nav">
                 <SearchBox />
                 <Nav className="me-auto  w-100  justify-content-end">
-                  <Link to="/cart" className="nav-link">
-                    Cart
-                    {cart.cartItems.length > 0 && (
-                      <Badge pill bg="danger">
-                        {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                      </Badge>
-                    )}
+                  {userInfo?.isAdmin === false || !userInfo ? (
+                    <Link to="/cart" className="nav-link">
+                      Cart
+                      {cart.cartItems.length > 0 && (
+                        <Badge pill bg="danger">
+                          {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                        </Badge>
+                      )}
 
-                    {/* <Nav className='me-auto'>
+                      {/* <Nav className='me-auto'>
                 <Link to="/cart" className='nav-link'>
                   Cart
                   {cart.cartItems.length > 0 && (
@@ -105,8 +109,11 @@ function App() {
                       {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                     </Badge>
                   )} */}
-                  </Link>
-                  {userInfo ? (
+                    </Link>
+                  ) : userInfo?.isAdmin === true && (
+                    <span></span>
+                  )}
+                  {userInfo?.isAdmin === false ? (
                     <NavDropdown title={userInfo?.username} id="basic-nav-dropdown">
                       <LinkContainer to="/profile">
                         <NavDropdown.Item>User Profile</NavDropdown.Item>
@@ -123,11 +130,36 @@ function App() {
                         Sign Out
                       </Link>
                     </NavDropdown>
-                  ) : (
+                  ) : !userInfo && (
                     <Link className="nav-link" to="/signin">
                       Sign In
                     </Link>
                   )}
+                  {userInfo?.isAdmin && (
+                    <NavDropdown title="Admin" id="admin-nav-dropdown">
+                      <LinkContainer to="/admin/products">
+                        <NavDropdown.Item>Add/Edit Products</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/orders">
+                        <NavDropdown.Item>View/Edit Orders</NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to="/admin/users">
+                        <NavDropdown.Item>View/Edit Users</NavDropdown.Item>
+                      </LinkContainer>
+                      <NavDropdown.Divider />
+                      <LinkContainer to="/profile">
+                        <NavDropdown.Item>Admin Profile</NavDropdown.Item>
+                      </LinkContainer>
+                      <Link
+                        className="dropdown-item"
+                        to="#signout"
+                        onClick={signoutHandler}
+                      >
+                        Sign Out
+                      </Link>
+                    </NavDropdown>
+                  )}
+
                 </Nav>
               </Navbar.Collapse>
 
@@ -189,10 +221,14 @@ function App() {
               <Route path="/signup" element={<SignupScreen />} />
               <Route path="/payment" element={<PaymentMethodScreen />}></Route>
               <Route path="/placeorder" element={<PlaceOrderScreen />} />
-              <Route path="/order/:id" element={<OrderScreen />} />
-              <Route path="/orderhistory" element={<OrderHistoryScreen />} />
-              <Route path="/profile" element={<ProfileScreen />} />
+              {/* <Route path="/order/:id" element={<OrderScreen />} /> */}
+              {/* <Route path="/orderhistory" element={<OrderHistoryScreen />} /> */}
+              {/* <Route path="/profile" element={<ProfileScreen />} /> */}
+              <Route path="/profile" element={<ProtectedRoute> <ProfileScreen /> </ProtectedRoute>} />
+              <Route path="/order/:id" element={<ProtectedRoute> <OrderScreen /> </ProtectedRoute>} />
+              <Route path="/orderhistory" element={<ProtectedRoute> <OrderHistoryScreen /> </ProtectedRoute>} />
               <Route path="/search" element={<SearchScreen />} />
+              <Route path="/admin/products" element={<AdminRoute> <ProductListScreen /></AdminRoute>} />
               <Route path='/' element={<HomeScreen />} />
             </Routes>
           </Container>
