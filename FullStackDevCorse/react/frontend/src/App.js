@@ -32,6 +32,7 @@ import SearchScreen from './screen/SearchScreen';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import ProductListScreen from './screen/ProductListScreen';
+import ProductEditScreen from './screen/ProductEditScreen';
 
 function App() {
   //const { state } = useContext(Store);
@@ -229,6 +230,7 @@ function App() {
               <Route path="/orderhistory" element={<ProtectedRoute> <OrderHistoryScreen /> </ProtectedRoute>} />
               <Route path="/search" element={<SearchScreen />} />
               <Route path="/admin/products" element={<AdminRoute> <ProductListScreen /></AdminRoute>} />
+              <Route path="/admin/product/:id" element={<AdminRoute> <ProductEditScreen /> </AdminRoute>} />
               <Route path='/' element={<HomeScreen />} />
             </Routes>
           </Container>

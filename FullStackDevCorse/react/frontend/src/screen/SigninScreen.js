@@ -1,4 +1,4 @@
-import { Link,  Navigate,  redirect, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, redirect, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -31,7 +31,7 @@ export default function SigninScreen() {
             });
             ctxDispatch({ type: 'USER_SIGNIN', payload: data });
             localStorage.setItem('userInfo', JSON.stringify(data));
-           //navigate(redirect || '/');
+            //navigate(redirect || '/');
         } catch (err) {
             toast.error(getError(err));
         }
@@ -62,5 +62,8 @@ export default function SigninScreen() {
                 </div>
                 <div className="mb-3">New customer?{' '}
                     <Link to={`/signup?redirect=${redirect}`}>Create your account</Link>
+                </div>
+                <div className="mb-3">Forgot password?{' '}
+                    <Link to={`/profile?redirect=${redirect}`}>Reset your password</Link>
                 </div></Form></Container>);
 }
