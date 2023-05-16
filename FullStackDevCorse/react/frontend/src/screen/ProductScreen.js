@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useEffect, useReducer, useState } from 'react'
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
@@ -37,6 +37,8 @@ const ProductScreen = () => {
     loading: true,
     error: ''
   });
+
+  const [selectedImage, setSelectedImage] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +82,8 @@ const ProductScreen = () => {
     <div>
       <Row>
         <Col md={6}>
-          <img className='img-large' src={product.image} alt={product.name}></img>
+          <img className='img-large' src={selectedImage || product.image}
+            alt={product.name}></img>
         </Col>
         <Col md={3}>
           <ListGroup>
@@ -96,6 +99,21 @@ const ProductScreen = () => {
             <ListGroup.Item>
               Price: ${product.price}
             </ListGroup.Item>
+            <ListGroup.Item>
+              <Row xs={1} md={2} className="g-2">
+                {[product.image, ...product.images].map((x) => (
+                  <Col key={x}>
+                    <Card>
+                      <Button className="thumbnail" type="button" variant="light" onClick={() => setSelectedImage(x)}
+                      >
+                        <Card.Img variant="top" src={x} alt="product" />
+                      </Button>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+            </ListGroup.Item>
+
             <ListGroup.Item>
               Description: {product.description}
             </ListGroup.Item>

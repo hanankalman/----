@@ -10,6 +10,8 @@ import { Helmet } from 'react-helmet-async';
 import Button from 'react-bootstrap/Button';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -51,7 +53,7 @@ export default function ProductEditScreen() {
     const { state } = useContext(Store);
     const { userInfo } = state;
 
-    const [{ loading, error, loadingUpdate }, dispatch] =
+    const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
         useReducer(reducer, {
             loading: true,
             error: '',
@@ -111,6 +113,42 @@ export default function ProductEditScreen() {
         }
     };
 
+    const uploadFileHandler = async (e, forImages) => {
+        const file = e.target.files[0];
+        const bodyFormData = new FormData();
+        bodyFormData.append('file', file);
+        try {
+            dispatch({ type: 'UPLOAD_REQUEST' });
+            const { data } = await axios.post('/api/upload', bodyFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    authorization: `Bearer ${userInfo.token}`,
+                },
+            });
+            dispatch({ type: 'UPLOAD_SUCCESS' });
+
+            if (forImages) {
+                setImages([...images, data.secure_url]);
+            } else {
+                setImage(data.secure_url);
+            }
+            toast.success('Image uploaded successfully. click Update to apply it');
+        } catch (err) {
+            toast.error(getError(err));
+            dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
+        }
+    };
+
+    const deleteFileHandler = async (fileName, f) => {
+        console.log(fileName, f);
+        console.log(images);
+        console.log(images.filter((x) => x !== fileName));
+        setImages(images.filter((x) => x !== fileName));
+        toast.success('Image removed successfully. click Update to apply it');
+    };
+
+
+
 
     return (
         <Container className="small-container">
@@ -150,7 +188,7 @@ export default function ProductEditScreen() {
                         />
                     </Form.Group>
 
-                    {/* <Form.Group className="mb-3" controlId="imageFile">
+                    <Form.Group className="mb-3" controlId="imageFile">
                         <Form.Label>Change Main Image</Form.Label>
                         <Form.Control type="file" onChange={uploadFileHandler} />
                         {loadingUpload && <LoadingBox></LoadingBox>}
@@ -187,7 +225,7 @@ export default function ProductEditScreen() {
                             onChange={(e) => uploadFileHandler(e, true)}
                         />
                         {loadingUpload && <LoadingBox></LoadingBox>}
-                    </Form.Group> */}
+                    </Form.Group>
 
                     <Form.Group className="mb-3" controlId="category">
                         <Form.Label>Category</Form.Label>
