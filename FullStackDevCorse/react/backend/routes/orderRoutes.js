@@ -1,8 +1,15 @@
 import express from 'express';
 import Order from '../models/orderModel.js';
-import { isAuth } from '../utils.js';
+import { isAdmin, isAuth } from '../utils.js';
 
 const orderRouter = express.Router();
+
+orderRouter.get('/', isAuth, isAdmin, async (req, res) => {
+  const orders = await Order.find().populate('user', 'name');
+  res.send(orders);
+}
+);
+
 
 orderRouter.put('/:id/pay', isAuth, (async (req, res) => {
   const order = await Order.findById(req.params.id);
